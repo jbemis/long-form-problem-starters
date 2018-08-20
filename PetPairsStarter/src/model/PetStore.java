@@ -2,9 +2,10 @@ package model;
 
 import model.pets.Pet;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class PetStore {
+    Map<String, ArrayList<Pet>> animals = new HashMap<>();
 
     //MODIFIES: this
     //EFFECTS: adds p to the petstore
@@ -32,6 +33,23 @@ public class PetStore {
             return pets.get(i);
         }
         return null;
+    }
+
+    //EFFECTS: prints out all pets in the store matching given attributes
+    public void displayAllPetsWithAttributes(boolean friendly, boolean needsAttention, double price) {
+        Collection<ArrayList<Pet>> allPets = animals.values();
+        for(ArrayList<Pet> petList : allPets ) {
+            displayOneSpeciesWithAttributes(petList, friendly, needsAttention, price);
+        }
+    }
+
+    //EFFECTS: prints out all pets of this species matching given attributes
+    public void displayOneSpeciesWithAttributes(List<Pet> petList, boolean friendly, boolean needsAttention, double price) {
+        for (Pet p : petList ) {
+            if (p.isFriendly() == friendly && p.needsAttention() == needsAttention && p.getPrice() <= price) {
+                System.out.println("Has attributes: " + p);
+            }
+        }
     }
 
 }
